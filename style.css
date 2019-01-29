@@ -1,0 +1,94 @@
+.container
+{
+    margin-bottom: 3em;
+}
+
+.head-container
+{
+    display: flex; 
+    margin-top:0.5em;
+    margin-bottom:2em;
+}
+
+.head-title
+{
+    padding-right: 0.5em;
+    color: rgb(44, 202, 216);
+    font-weight: lighter;
+}
+
+.head-sub-title
+{
+    margin-top: 2em;
+    font-size: 12px;
+}
+
+
+.card
+{
+    border: 0px;
+    overflow: hidden;
+    margin-bottom: 1em;
+}
+.card-body
+{
+    background:rgb(235, 235, 235);
+}
+
+
+.card-img-top
+{
+    width:16em;
+    height:12em;
+}
+
+.card-title
+{
+    color: rgb(42, 190, 201);
+}
+
+.card-text
+{
+    font-size: 14px;
+}
+.cardFooter
+{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+
+footer
+{
+    background: rgb(34, 177, 187);
+    color: white;
+}
+
+/* ------------------ */
+.scroller
+{
+    width:20em;
+    height:40em;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background: #F5F5F5;
+}
+
+.scroller img
+{
+    width:10em;
+    height:12em;
+    margin-top:0.25em;
+    margin-bottom:0.25em;
+}
+
+.displayImage h2, .displayImage h3
+{
+    margin-left: 2em;
+}
+
+.displayImage img
+{
+    width:25em;
+    height:30em;
+}
