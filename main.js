@@ -3,7 +3,7 @@ $(document).ready(
     {
         var model =
         {
-            iterator : 0,
+            identity : 0,
 
             avengers : [
                 {
@@ -51,9 +51,45 @@ $(document).ready(
         }
 
 
-        var controller = 
+        var octopus = 
         {
-            
+            init : function()
+            {
+                view.init();
+            },
+
+            getAvengers : function()
+            {
+                return model.avengers;
+            },
+
+            incrementClicks : function(index)
+            {
+                model.avengers[index].numberOfClicks++;
+            },
+
+            getClicks : function (index)
+            {
+                return  model.avengers[index].numberOfClicks;
+            },
+            setNewData : function(index, imageURL, name, description)
+            {
+                if(imageURL != "")
+                    model.avengers[index].imageURL = imageURL;
+                if(name != "")
+                    model.avengers[index].name = name;
+                if(description != "")
+                    model.avengers[index].description = description;
+                view.render();
+            },
+            getIdentity : function()
+            {
+                return model.identity;
+            },
+            setIdentity : function(newIdentity)
+            {
+                model.identity = newIdentity;
+            }
         }
 
 
@@ -61,72 +97,66 @@ $(document).ready(
         {
             init : function ()
             {
-                var mainImage = $(".displayImage img");
+                this.mainImage = $(".displayImage img")[0];
+                this.$scroller = $(".scroller");
+                this.avengers = octopus.getAvengers();
+                this.$adminbutton = $("#admin-btn");
+                this.$admindatabutton = $("#admindatabutton");
+                this.$adminbutton.click(function()
+                {
+                    var $admin = $(".admin-panel");
+                    if($admin[0].hidden == true)
+                        $admin[0].hidden = false;
+                    else if($admin[0].hidden == false)
+                        $admin[0].hidden = true;
+                    
+                });
+                
+                this.$admindatabutton.click(function()
+                {
+                    var imageID = $(".displayImage img")[0].getAttribute("identification");
+                    octopus.setNewData(imageID,$("#adminURLNew")[0].value, $("#adminNameNew")[0].value, $("#adminDescriptionNew")[0].value);
+                });
+                this.mainImage.addEventListener("click" , (event) => 
+                {
+                    octopus.incrementClicks(event.target.getAttribute("identification"));             
+                    document.querySelector(".displayImage h3").innerHTML = octopus.getClicks(event.target.getAttribute("identification"));
+                });
+                this.render();
             },
             render : function ()
             {
-                this.mainImage.addEventListener("click" , (event) => 
+                var avengers = this.avengers;
+                var identity = octopus.getIdentity();
+                document.querySelector(".displayImage img").src = avengers[identity].imageURL;
+                document.querySelector(".displayImage img").setAttribute("identification", identity);
+                document.querySelector(".displayImage h2").innerHTML = avengers[identity].name;
+                document.querySelector(".displayImage h3").innerHTML = avengers[identity].numberOfClicks;
+               
+                this.$scroller.html('');
+                for(let i =0; i<avengers.length; i++)
                 {
-                    console.log(event.target.getAttribute("identification"));
-                    avengers[event.target.getAttribute("identification")].numberOfClicks++;             
-                    document.querySelector(".displayImage h3").innerHTML = avengers[event.target.getAttribute("identification")].numberOfClicks;
-                });
+                    var cardImage = document.createElement("img");
+                    cardImage.className = "card-img-top";
+                    cardImage.src = avengers[i].imageURL;
+                    cardImage.id = avengers[i].id;
+                    cardImage.addEventListener("click" , (event) => 
+                    {             
+                        document.querySelector(".displayImage img").src = avengers[event.target.id].imageURL;
+                        document.querySelector(".displayImage img").setAttribute("identification", event.target.id);
+                        document.querySelector(".displayImage h2").innerHTML = avengers[event.target.id].name;
+                        document.querySelector(".displayImage h3").innerHTML = avengers[event.target.id].numberOfClicks;
+                        octopus.setIdentity(event.target.id);
+                    })
+                    this.$scroller[0].appendChild(cardImage);
+                }
+
+               
             }
         }
-        createAvengersScroller();
-   
+        
+        octopus.init();
     }   
 );
-
-
-
-
-const createAvengersScroller = () =>
-{
-    var divRow = document.querySelector(".mainBody");
-
-    var divScroller = document.createElement("div");
-    divScroller.className = "col-sm-2 scroller";
-
-    var divDisplayArea = document.createElement("div");
-    divDisplayArea.className = "col-sm-4 displayImage";
-
-    var divDisplayAreaImage = document.createElement("img");
-    divDisplayAreaImage.src = avengers[0].imageURL;
-    divDisplayAreaImage.setAttribute("identification" , 0);
-    divDisplayAreaImage.addEventListener("click" , (event) => 
-        {
-            console.log(event.target.getAttribute("identification"));
-            avengers[event.target.getAttribute("identification")].numberOfClicks++;             
-            document.querySelector(".displayImage h3").innerHTML = avengers[event.target.getAttribute("identification")].numberOfClicks;
-        })
-    var divDisplayAreaName = document.createElement("h2");
-    divDisplayAreaName.innerHTML = avengers[0].name;
-    var divDisplayAreaClicks = document.createElement("h3");
-    divDisplayAreaClicks.innerHTML = avengers[0].numberOfClicks;
-
-    divDisplayArea.appendChild(divDisplayAreaImage);
-    divDisplayArea.appendChild(divDisplayAreaName);
-    divDisplayArea.appendChild(divDisplayAreaClicks);
-    
-    for(var i =0; i<avengers.length; i++)
-    {
-        var cardImage = document.createElement("img");
-        cardImage.className = "card-img-top";
-        cardImage.src = avengers[i].imageURL;
-        cardImage.id = avengers[i].id;
-        cardImage.addEventListener("click" , (event) => 
-        {             
-            document.querySelector(".displayImage img").src = avengers[event.target.id].imageURL;
-            document.querySelector(".displayImage img").setAttribute("identification", event.target.id);
-            document.querySelector(".displayImage h2").innerHTML = avengers[event.target.id].name;
-            document.querySelector(".displayImage h3").innerHTML = avengers[event.target.id].numberOfClicks;
-        })
-        divScroller.appendChild(cardImage);
-    }
-   divRow.appendChild(divScroller);
-   divRow.appendChild(divDisplayArea);
-
-}
 
 

@@ -82,6 +82,11 @@ footer
     margin-bottom:0.25em;
 }
 
+.displayImage
+{
+    margin-right: 15em;
+}
+
 .displayImage h2, .displayImage h3
 {
     margin-left: 2em;
@@ -91,4 +96,52 @@ footer
 {
     width:25em;
     height:30em;
+    
+}
+
+
+.admin-panel
+{
+    width:15em;
+    height:22em;
+    background-color: white;
+    border-style: solid;
+    border-width: 0.1em;
+    border-color: silver;
+    padding: 1em;
+}
+
+.magenta
+{
+    background-color: rgb(220, 100, 231);
+    color:white;
+    border-style: solid;
+    border-width: 0.1em;
+    border-color: rgb(220, 100, 231);
+}
+.magenta:hover
+{
+    background-color: white;
+    color:rgb(220, 100, 231);
+    border-style: solid;
+    border-width: 0.1em;
+    border-color: rgb(220, 100, 231);
+}
+
+.black
+{
+    background-color: rgb(0, 0, 0);
+    color:white;
+    margin-bottom: 1em;
+    border-style: solid;
+    border-width: 0.1em;
+    border-color: black;
+}
+.black:hover
+{
+    background-color: white;
+    color:black;
+    border-style: solid;
+    border-width: 0.1em;
+    border-color: black;
 }
